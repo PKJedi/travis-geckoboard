@@ -83,6 +83,7 @@ Rx.Observable
         })();
     })
     .flatMap(observableFromJsonResponse)
-    .subscribe(function(response) {
+    .subscribe(function(response) {
         console.log(response);
     });
+
