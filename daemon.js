@@ -20,6 +20,11 @@ var observableFromJsonResponse = function(response) {
         .map(JSON.parse);
 };
 
+/*
+ * TODO refactor such that the outer Observable is always on the "all" level
+ * Currently all -> repositories -> builds -> all, with nasty mutable state
+ */
+
 Rx.Observable
     .interval(config.interval * 1000)
     .flatMap(function() {
