@@ -19,10 +19,10 @@ and pushes it into a [Geckoboard](http://www.geckoboard.com/) custom text widget
 
 ## Configure
 
-Copy _config.example.json_ to _config.json_ and edit to your needs.
+Copy `config.example.json` to `config.json` and edit to your needs.
 
 ## Run
 
-npm install
-node --harmony daemon.js
+    npm install
+    node --harmony daemon.js
 
