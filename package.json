@@ -6,7 +6,7 @@
   "author": "Petri Koivula",
   "license": "MIT",
   "dependencies": {
-    "rx": "^2.2.13",
-    "underscore": "^1.6.0"
+    "rx": "2.2.13",
+    "underscore": "1.6.0"
   }
 }
