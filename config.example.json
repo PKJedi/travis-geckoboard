@@ -4,14 +4,8 @@
         "api_key": "your geckoboard account api key",
         "widget_key": "uuid of your geckoboard custom text widget"
     },
-    "repos": {
-        "7900": {
-            "name": "xi-project/xi-filelib",
-            "url": "https://api.travis-ci.org/repos/xi-project/xi-filelib/builds"
-        },
-        "30296": {
-            "name": "xi-project/xi-bundle-filelib",
-            "url": "https://api.travis-ci.org/repos/xi-project/xi-bundle-filelib/builds"
-        }
-    }
+    "repos": [
+        "https://api.travis-ci.org/repos/xi-project/xi-filelib/builds",
+        "https://api.travis-ci.org/repos/xi-project/xi-bundle-filelib/builds"
+    ]
 }
