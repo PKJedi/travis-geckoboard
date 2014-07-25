@@ -6,6 +6,7 @@
   "author": "Petri Koivula",
   "license": "MIT",
   "dependencies": {
+    "pointfree-fantasy": "^0.1.0",
     "rx": "2.2.13"
   }
 }
