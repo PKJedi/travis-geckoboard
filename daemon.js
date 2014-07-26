@@ -2,35 +2,31 @@
 
 'use strict';
 
+require('pointfree-fantasy').expose(global);
+
 const Rx = require('rx');
+Rx.Observable.prototype.chain = Rx.Observable.prototype.flatMap;
+
 const config = require('./config.json');
-const travis = require('./lib/travis.js');
+const fetchRepository = require('./lib/travis.js');
 const geckoboard = require('./lib/geckoboard.js');
-const repositoriesToHtml = require('./lib/repositoriesToHtml.js');
+const renderRepositories = require('./lib/repositoriesToHtml.js');
 
-Rx.Observable
+const fetchRepositories = compose(Rx.Observable.zipArray, map(fetchRepository));
 
-    // Every config.interval seconds,
-    .interval(config.interval * 1000)
+const pushToWidget = curry(geckoboard.customText)(config.geckoboard.api_key, config.geckoboard.widget_key);
 
-    // fetch build information from Travis CI.
-    .flatMap(function() {
-        return travis(config.repos);
-    })
+const htmlsToWidgetItems = function(htmls) {
+    return [{text: htmls.join('\n'), type: 0}];
+};
 
-    // Format the build information and
-    .map(repositoriesToHtml)
+const pushHtmlsAsWidgetItems = compose(pushToWidget, htmlsToWidgetItems);
 
-    // push it onto Geckoboard.
-    .flatMap(function(html) {
-        return geckoboard.customText(
-            config.geckoboard.api_key,
-            config.geckoboard.widget_key,
-            [{text: html, type: 0}]
-        );
-    })
+const fetchRenderPush = compose(chain(pushHtmlsAsWidgetItems), map(renderRepositories), chain(fetchRepositories));
 
-    // Output Geckoboard response or possible errors.
+const repositoriesTrigger = Rx.Observable.interval(config.interval * 1000).map(K(config.repos));
+
+fetchRenderPush(repositoriesTrigger)
     .subscribe(
         function(response) {
             console.log(response);
